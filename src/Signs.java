@@ -1,4 +1,4 @@
-package me.calzavara.simple3t;
+
 
 public class Signs {
 	private char tipo;

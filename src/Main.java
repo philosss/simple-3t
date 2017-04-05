@@ -1,4 +1,4 @@
-package me.calzavara.simple3t;
+
 
 import java.util.Scanner;
 
@@ -6,10 +6,9 @@ public class Main {
 	public static void main(String args[]){
 		System.out.print("Welcome to the Simple Tic Tac Toe!");
 		Grid grid=new Grid();
-		System.out.println("The grid is ready. Use the numbers to place a sign on the spot that you prefer");
+		System.out.println("The grid is ready.");
 		System.out.println("First user has the X. Press anytime 0 to abort the game");
-		Scanner sc = new Scanner(System.in);
-		System.out.println("Ready? press any key to continue...");
+		System.out.print("Ready? press any key to continue...");
 		try {
 			System.in.read();
 		} catch (java.io.IOException e1) {
@@ -27,7 +26,7 @@ public class Main {
 				System.out.print("O's turn: ");
 			}
 			
-			position= sc.nextInt();
+			position= new Scanner(System.in).nextInt();
 			
 			try{
 				if(position==0){
@@ -44,16 +43,13 @@ public class Main {
 						System.out.println(e.getWhy());
 						i--;
 					}finally{
-						
 						grid.view(true);
 						grid.view(false);
-						
-
 					}
 				}
 				if(i==8) throw new EvenException();
 			}catch(HaltException e){
-				System.out.print(e.getWhy());
+				System.out.println(e.getWhy());
 				halt=true;
 			}	
 		}
