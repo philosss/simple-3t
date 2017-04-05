@@ -4,13 +4,20 @@ import java.util.Scanner;
 
 public class Main {
 	public static void main(String args[]){
-		System.out.println("Welcome to the Simple Tic Tac Toe!");
+		System.out.print("Welcome to the Simple Tic Tac Toe!");
 		Grid grid=new Grid();
-		System.out.println("The grid is ready. First user has the X. Use the numbers to place a sign on the spot that you prefer");
-		grid.view(true);
-		System.out.println("First user has the X. Use the numbers to place a sign on the spot that you prefer");
-		System.out.println("Press 0 to exit");
+		System.out.println("The grid is ready. Use the numbers to place a sign on the spot that you prefer");
+		System.out.println("First user has the X. Press anytime 0 to abort the game");
+		Scanner sc = new Scanner(System.in);
+		System.out.println("Ready? press any key to continue...");
+		try {
+			System.in.read();
+		} catch (java.io.IOException e1) {
+			e1.printStackTrace();
+		}
+		for(int p=0;p<30;p++) System.out.println();
 		int position;
+		grid.view(true);
 		boolean x_turn=true;
 		boolean halt=false;
 		for(int i=0;i<9 && !halt;i++){
@@ -19,7 +26,7 @@ public class Main {
 			}else{
 				System.out.print("O's turn: ");
 			}
-			Scanner sc = new Scanner(System.in);
+			
 			position= sc.nextInt();
 			
 			try{
@@ -27,22 +34,29 @@ public class Main {
 					throw new HaltException();
 				}else{
 					try{
+						for(int p=0;p<30;p++) System.out.println();
 						grid.write(position, x_turn);
+						x_turn=!x_turn;
+						grid.isThereAWinner();
+					}catch(IOException e){
+						for(int p=0;p<30;p++) System.out.println();
+						System.out.println();
+						System.out.println(e.getWhy());
+						i--;
+					}finally{
+						
+						grid.view(true);
 						grid.view(false);
-					}catch(NoSuchCellException e){
-						System.out.println(e.getWhy());
-						i--;
-					}catch(OccupiedException e){
-						System.out.println(e.getWhy());
-						i--;
+						
+
 					}
 				}
+				if(i==8) throw new EvenException();
 			}catch(HaltException e){
-				System.out.println(e.getWhy());
+				System.out.print(e.getWhy());
 				halt=true;
 			}	
 		}
-		System.out.println("Bye bye!");
 	}
 	
 }

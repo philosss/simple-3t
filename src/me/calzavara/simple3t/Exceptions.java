@@ -1,20 +1,40 @@
 package me.calzavara.simple3t;
 
-class OccupiedException extends Exception {
-	private String why="La cella è già occupata";
+/* UNDER IO */
+class IOException extends Exception{	
 	public String getWhy() {
-		return why;
+		return "Generic IOException";
 	}
 }
-class NoSuchCellException extends Exception {
-	private String why="La cella selezionata non esiste";
+class OccupiedException extends IOException {
 	public String getWhy() {
-		return why;
+		return "This spot has been already occupied";
 	}
 }
+class NoSuchCellException extends IOException {
+	public String getWhy() {
+		return "This spot does not exists";
+	}
+}
+
+
 class HaltException extends Exception {
-	private String why="Game aborted";
-	public String getWhy() {
+	protected String why;
+	public final String getWhy() {
 		return why;
+	}
+	public HaltException(){
+		this.why="Game aborted";
+	}
+	public HaltException(int winner){
+		this.why="The winner is "+(winner==0 ? 'X' : 'O');
+		
+		
+	}
+}
+class EvenException extends HaltException {
+	
+	public EvenException(){
+		this.why="There's no winner!";
 	}
 }
